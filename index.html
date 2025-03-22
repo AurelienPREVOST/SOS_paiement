@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tunnel de vente proto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://www.paypal.com/sdk/js?client-id=ATOxM7htRE7TE-VszBrdwMkp8vlM3oLostg26JFuR72Q6N9S5qlWJMl5LJipJFT02UTSqnMTuQOcShnN&currency=EUR"></script>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+<body>
+    <header>
+        <h1>SOS FACTURE</h1>
+    </header>
+    <section id="main">
+        <div id="top-area">
+            <div id="main-illustration-container">
+                <img src="./no_paiement_available.jpg" alt="aucun paiement disponible">
+            </div>
+            <div id="paypal-donation">
+                <p style="color:red;font-size:20px;text-align:center">
+                    ATTENTION! Le paiement est fonctionnel - Aucune contrepartie financière ne sera rendu en contrepartie d'un paiement - ce site est fictif et ne sert qu'à des démonstrations B2B.
+                </p>
+                <h2>Probleme de paiement? pas de panique...</h2>
+                <p>Entrez le montant de la facture à acquitter :</p>
+                <p>(montant ttc - devise en euros)</p>
+                <input type="number" id="amount" min="1" step="0.01" value="1">
+                <!-- <br> -->
+                <div id="paypal-button-container" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+        <div id="bottom-area">
+            <div id="product-info">
+                <h2>Comment ça fonctionne?</h2>
+                <p>Specialement conçu pour les cas imprévus, cette application à pour but de vous permettre de régler votre facture auprès de votre commercant.</p>
+                <p>Carte bancaire dysfonctionnel? Aucunes espece ? une file d'attente commence à se former derrière vous ? Cette situation n'est confortable pour personne. Ni vous, ni le commercant, ni les autres clients.</p>
+                <p>Heureusement vous avez trouvé la solution! Demandez à votre commercant combien vous lui devez, saisissez le montant dans la zone prévu à cet effet, et finalisez votre transaction.</p>
+                <p>Un email vous sera transmis par paypal certifiant votre transaction. Et dans le même temps votre commercant recevra un mail similaire preuve de votre paiement.</p>
+                <p>Il n'y a plus qu'à dire merci et à bientôt!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <ul>
+            <li>Mentions légales</li>
+            <li>RGPD</li>
+            <li>Contact: 01 XX XX XX XX</li>
+        </ul>
+    </footer>
+
+    <script>
+        function renderPayPalButton() {
+            let amountInput = document.getElementById("amount");
+
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    let amount = parseFloat(amountInput.value).toFixed(2);
+                    if (amount < 1) {
+                        alert("Le montant doit être d'au moins 1€.");
+                        return;
+                    }
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: { value: amount }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        alert("Transaction réussie : " + details.payer.name.given_name);
+                    });
+                },
+                onError: function(err) {
+                    console.error("Erreur de paiement", err);
+                    alert("Une erreur est survenue. Veuillez réessayer.");
+                }
+            }).render("#paypal-button-container");
+        }
+
+        renderPayPalButton();
+
+        document.getElementById("amount").addEventListener("input", function() {
+            document.getElementById("paypal-button-container").innerHTML = "";
+            renderPayPalButton();
+        });
+    </script>
+
+</body>
+</html>
