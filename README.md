@@ -1,26 +1,16 @@
-## A destination des associations.  
+## A destination des entreprises.  
 
-Vous êtes une association souhaitant recolté des dons?  
-Sentez vous libre d'utiliser ce template prédéfini permettant de percevoir des dons.  
+Vous avez déja été confrontés à un client qui arrive en caisse mais dont le mode de paiement n'ai pas utilisable?  
+Carte bancaire hors service, TPE en panne, et pourtant...service déja rendu donc payable.
 
-Le script et le html peuvent être adaptés pour ajouter des bouttons de choix de sommes:  
-par exemple 1€ / 5€ / 20€ ou encore pourquoi pas un input à champ libre (warning: sanitize)
+Ne laissez plus partir vos clients dans la nature et offrez leur une possibilités de paiement via paypal ou grâce aux numero et données présente sur leur carte bancaire physique.
 
-Dans un premier temps rendez vous sur :
-https://developer.paypal.com/dashboard/
+Attention, des frais inhérent à l'utilisation des services paypal s'applique. 
 
-Connectez vous à votre compte.  
-Si vous n'en avez pas encore, créé vous un compte business sur paypal.  
+Prérequis: 
+compte paypal pro
 
-une fois activé rendez vous dans l'onglet developpeur et recupéré la clé publique.  
-
-Interpolé cette clé en params de l'url du script html contenu dans le head du fichier index.html:
-
-```
-<script src="https://www.paypal.com/sdk/js?client-id=COPIER_VOTRE_CLE_PUBLIQUE&currency=EUR"></script>
-```
-
-Tout est prêt une fois votre compte paypal officialisé la page de don est prête à être mise en production.
+ATTENTION : le template dispose d'une clé fonctionelle pour les tests. Aucune contrepartie ne sera fournis en cas de paiement erroné.
 
 
 
